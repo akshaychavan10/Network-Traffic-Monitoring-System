@@ -192,8 +192,6 @@ network_traffic/
   - Alerts: “2025-03-12 00:35:45 - Spike: 2.90 packets/sec”
   
 - **History**:
-
-  ![history](history.png)
   - Packet Counts: “2025-03-12 00:35:45 | 29 | 0 | 27 | 0 | 0”
 
 ---
