@@ -15,7 +15,7 @@ TRAFFIC_LOG_FILE = "traffic_alerts.log"
 THREAT_LOG_FILE = "threat_alerts.log"
 MAX_ALERTS = 5
 MAX_THREAT_CHECKS = 50
-ABUSEIPDB_API_KEY = "ade75793d41c1607d6b072efd4fbcec3526f20b1d4dd1cfb2a521e459c5174d0e56952c246b3f3fa"
+ABUSEIPDB_API_KEY = "Your_API_Key"
 
 # Logging setup
 traffic_logger = logging.getLogger("TrafficAlerts")
