@@ -1,0 +1,107 @@
+2025-03-11 22:17:54 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=374.50, avg_rate=94.22, bandwidth=19228.10, spike_detected=True
+2025-03-11 22:18:04 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=590.60, avg_rate=193.50, bandwidth=30179.40, spike_detected=True
+2025-03-11 22:18:14 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=230.70, avg_rate=239.34, bandwidth=11805.50, spike_detected=False
+2025-03-11 22:49:27 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=50.20, avg_rate=17.10, bandwidth=8435.90, spike_detected=True
+2025-03-11 22:51:38 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:51:49 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:51:59 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:52:10 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:52:21 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:52:32 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:52:43 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:52:54 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:53:05 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:53:16 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:53:27 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:53:37 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:53:48 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:53:59 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:54:10 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:54:21 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=4.40, avg_rate=1.52, bandwidth=3150.10, spike_detected=True
+2025-03-11 22:54:21 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:54:32 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 22:54:42 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, threat_info=Threat detected (Score: 100)
+2025-03-11 23:02:53 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:02:53 | ERROR | Threat check failed for 224.0.0.22: 'data'
+2025-03-11 23:02:54 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:03:04 | ERROR | Threat check failed for 224.0.0.2: 'data'
+2025-03-11 23:03:04 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:03:04 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:03:05 | ERROR | Threat check failed for 34.120.208.123: 'data'
+2025-03-11 23:03:15 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:03:15 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:03:25 | ERROR | Threat check failed for 104.26.12.38: 'data'
+2025-03-11 23:03:26 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:03:26 | ERROR | Threat check failed for 224.0.0.2: 'data'
+2025-03-11 23:03:26 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:03:26 | ERROR | Threat check failed for 54.38.190.246: 'data'
+2025-03-11 23:03:37 | ERROR | Threat check failed for 54.38.190.246: 'data'
+2025-03-11 23:03:37 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:03:37 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:03:47 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:03:48 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:03:58 | ERROR | Threat check failed for 104.26.13.38: 'data'
+2025-03-11 23:03:58 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:03:58 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:04:09 | ERROR | Threat check failed for 224.0.0.1: 'data'
+2025-03-11 23:04:09 | ERROR | Threat check failed for 34.120.208.123: 'data'
+2025-03-11 23:04:09 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:04:09 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:04:20 | ERROR | Threat check failed for 104.26.13.38: 'data'
+2025-03-11 23:04:20 | ERROR | Threat check failed for 224.0.0.2: 'data'
+2025-03-11 23:04:20 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:04:20 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:04:31 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:04:31 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:04:31 | ERROR | Threat check failed for 34.107.243.93: 'data'
+2025-03-11 23:04:31 | ERROR | Threat check failed for 34.149.100.209: 'data'
+2025-03-11 23:04:41 | ERROR | Threat check failed for 104.26.12.38: 'data'
+2025-03-11 23:04:42 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:04:42 | ERROR | Threat check failed for 54.38.190.246: 'data'
+2025-03-11 23:04:52 | ERROR | Threat check failed for 104.26.12.38: 'data'
+2025-03-11 23:04:53 | ERROR | Threat check failed for 54.38.190.246: 'data'
+2025-03-11 23:04:53 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:04:53 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:05:03 | ERROR | Threat check failed for 104.26.13.38: 'data'
+2025-03-11 23:05:03 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:05:04 | ERROR | Threat check failed for 34.120.208.123: 'data'
+2025-03-11 23:05:14 | ERROR | Threat check failed for 104.26.13.38: 'data'
+2025-03-11 23:05:14 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:05:14 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:05:25 | ERROR | Threat check failed for 54.38.190.246: 'data'
+2025-03-11 23:05:25 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:05:35 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:05:35 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:05:36 | ERROR | Threat check failed for 34.149.100.209: 'data'
+2025-03-11 23:05:46 | ERROR | Threat check failed for 104.26.13.38: 'data'
+2025-03-11 23:05:46 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:05:46 | ERROR | Threat check failed for 34.120.208.123: 'data'
+2025-03-11 23:05:46 | ERROR | Threat check failed for 54.38.190.246: 'data'
+2025-03-11 23:05:46 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=3.00, avg_rate=1.26, bandwidth=517.70, spike_detected=True
+2025-03-11 23:05:57 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:05:57 | ERROR | Threat check failed for 54.38.190.246: 'data'
+2025-03-11 23:06:07 | ERROR | Threat check failed for 54.38.190.246: 'data'
+2025-03-11 23:06:08 | ERROR | Threat check failed for 224.0.0.251: 'data'
+2025-03-11 23:06:08 | ERROR | Threat check failed for 255.255.255.255: 'data'
+2025-03-11 23:06:08 | ERROR | Threat check failed for 224.0.0.1: 'data'
+2025-03-11 23:06:18 | ERROR | Threat check failed for 104.26.13.38: 'data'
+2025-03-11 23:06:18 | ERROR | Threat check failed for 54.38.190.246: 'data'
+2025-03-11 23:08:30 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=2.30, avg_rate=1.07, bandwidth=224.60, spike_detected=True
+2025-03-11 23:08:30 | WARNING | Threat Alert: interface=enp0s3, ip=54.38.190.246, count=4, threat_info=Threat detected (Score: 100)
+2025-03-11 23:19:28 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=213.80, avg_rate=43.40, bandwidth=10947.10, spike_detected=True
+2025-03-11 23:19:39 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=476.20, avg_rate=138.42, bandwidth=25397.10, spike_detected=True
+2025-03-11 23:19:49 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=481.80, avg_rate=234.66, bandwidth=24629.50, spike_detected=True
+2025-03-11 23:34:04 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=1.90, avg_rate=0.82, bandwidth=224.80, spike_detected=True
+2025-03-11 23:34:14 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=2.30, avg_rate=1.12, bandwidth=250.70, spike_detected=True
+2025-03-11 23:34:56 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=8.90, avg_rate=2.66, bandwidth=10725.70, spike_detected=True
+2025-03-11 23:50:15 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=10.10, avg_rate=3.73, bandwidth=3896.80, spike_detected=True
+2025-03-11 23:52:16 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=7.70, avg_rate=2.70, bandwidth=1993.60, spike_detected=True
+2025-03-11 23:55:48 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=0.90, avg_rate=0.44, bandwidth=176.90, spike_detected=True
+2025-03-11 23:57:40 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=12.80, avg_rate=2.78, bandwidth=5477.50, spike_detected=True
+2025-03-12 00:37:00 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=1.50, avg_rate=0.66, bandwidth=154.20, spike_detected=True
+2025-03-12 00:41:22 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=2.10, avg_rate=0.64, bandwidth=1172.10, spike_detected=True
+2025-03-12 00:41:53 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=6.70, avg_rate=2.42, bandwidth=481.60, spike_detected=True
+2025-03-12 00:42:03 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=590.10, avg_rate=120.38, bandwidth=30162.70, spike_detected=True
+2025-03-12 00:42:13 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=509.10, avg_rate=221.78, bandwidth=26008.30, spike_detected=True
+2025-03-12 01:19:13 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=1.00, avg_rate=0.42, bandwidth=121.20, spike_detected=True
+2025-03-12 01:21:34 | WARNING | Traffic Alert: interface=enp0s3, packet_rate=13.70, avg_rate=3.80, bandwidth=4637.00, spike_detected=True

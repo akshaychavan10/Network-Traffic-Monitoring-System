@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Network Traffic Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #2a2a3d);
+            color: #e0e0e0;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #00d4ff;
+            font-size: 2.8em;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px rgba(0, 212, 255, 0.7);
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: #2d2d44;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+        .card h2 {
+            color: #ffcc00;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ffcc00;
+            padding-bottom: 5px;
+        }
+        .metric {
+            margin: 15px 0;
+            font-size: 1.2em;
+        }
+        .metric strong {
+            color: #ffcc00;
+        }
+        .alert {
+            color: #ff5555;
+            font-weight: bold;
+            background: rgba(255, 85, 85, 0.2);
+            padding: 5px 12px;
+            border-radius: 8px;
+        }
+        .normal {
+            color: #55ff55;
+            background: rgba(85, 255, 85, 0.2);
+            padding: 5px 12px;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th {
+            background: #3b3b5b;
+            color: #00d4ff;
+            padding: 12px;
+            text-align: left;
+            border-radius: 8px 8px 0 0;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #3b3b5b;
+        }
+        .bandwidth-bar {
+            height: 25px;
+            background: #3b3b5b;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .bandwidth-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #007bff);
+            transition: width 0.5s ease;
+        }
+        .alerts-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .alerts-section li {
+            background: rgba(255, 85, 85, 0.3);
+            color: #fff;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            transition: background 0.3s ease;
+        }
+        .alerts-section li:hover {
+            background: rgba(255, 85, 85, 0.5);
+        }
+        .threat {
+            color: #ff5555;
+            font-style: italic;
+        }
+        .threat-alerts li {
+            background: rgba(255, 165, 0, 0.3);
+        }
+        .threat-alerts li:hover {
+            background: rgba(255, 165, 0, 0.5);
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #888;
+            font-size: 0.95em;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Network Traffic Dashboard</h1>
+    <div class="container">
+        <div class="card">
+            <h2>Traffic Metrics</h2>
+            <div class="metric">
+                <strong>Bandwidth Usage:</strong> <span id="bandwidth">{{ metrics.bandwidth|round(2) }}</span> bytes/sec
+            </div>
+            <div class="bandwidth-bar">
+                <div class="bandwidth-fill" id="bandwidth-fill" style="width: {{ (metrics.bandwidth / 1000) * 100 if metrics.bandwidth < 1000 else 100 }}%;"></div>
+            </div>
+            <div class="metric">
+                <strong>Packet Rate:</strong> <span id="packet_rate">{{ metrics.packet_rate|round(2) }}</span> packets/sec 
+                (Avg: <span id="avg_rate">{{ metrics.avg_rate|round(2) }}</span>)
+            </div>
+            <div class="metric">
+                <strong>Spike Detected:</strong> 
+                <span id="spike" class="{{ 'alert' if metrics.spike_detected else 'normal' }}">{{ 'Yes' if metrics.spike_detected else 'No' }}</span>
+            </div>
+            <div class="metric">
+                <strong>Protocol Breakdown:</strong><br>
+                TCP: <span id="tcp">{{ metrics.protocols.tcp }}</span> | UDP: <span id="udp">{{ metrics.protocols.udp }}</span> | ICMP: <span id="icmp">{{ metrics.protocols.icmp }}</span> | SYN: <span id="syn">{{ metrics.protocols.syn_count }}</span>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Top Source IPs</h2>
+            <table id="src_ips">
+                <tr><th>IP: Count (Threat Info)</th></tr>
+                {% for ip, count, threat in metrics.top_src_ips %}
+                    <tr><td>{{ ip }}: {{ count }} {% if threat %}<span class="threat">({{ threat }})</span>{% endif %}</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="card">
+            <h2>Top Destination IPs</h2>
+            <table id="dst_ips">
+                <tr><th>IP: Count (Threat Info)</th></tr>
+                {% for ip, count, threat in metrics.top_dst_ips %}
+                    <tr><td>{{ ip }}: {{ count }} {% if threat %}<span class="threat">({{ threat }})</span>{% endif %}</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="card">
+            <h2>Traffic Alerts</h2>
+            <div class="alerts-section">
+                <ul id="traffic_alerts">
+                    {% if metrics.traffic_alerts %}
+                        {% for alert in metrics.traffic_alerts %}
+                            <li>{{ alert }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>No recent traffic alerts</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Suspicious IPs</h2>
+            <div class="alerts-section threat-alerts">
+                <ul id="threat_alerts">
+                    {% if metrics.threat_alerts %}
+                        {% for alert in metrics.threat_alerts %}
+                            <li>{{ alert }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>No suspicious IPs detected</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <footer>Monitoring {{ INTERFACE }} | Real-time updates via WebSockets | <a href="/history">View History</a></footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+    <script>
+        const socket = io.connect('http://' + window.location.host);
+        socket.on('connect', function() {
+            console.log('Connected to WebSocket');
+        });
+        socket.on('update', function(data) {
+            console.log('Received update:', data);  // Debug incoming data
+            // Traffic Metrics
+            document.getElementById('bandwidth').innerText = data.bandwidth.toFixed(2);
+            document.getElementById('bandwidth-fill').style.width = (data.bandwidth < 1000 ? (data.bandwidth / 1000) * 100 : 100) + '%';
+            document.getElementById('packet_rate').innerText = data.packet_rate.toFixed(2);
+            document.getElementById('avg_rate').innerText = data.avg_rate.toFixed(2);
+            document.getElementById('spike').innerText = data.spike_detected ? 'Yes' : 'No';
+            document.getElementById('spike').className = data.spike_detected ? 'alert' : 'normal';
+            document.getElementById('tcp').innerText = data.protocols.tcp;
+            document.getElementById('udp').innerText = data.protocols.udp;
+            document.getElementById('icmp').innerText = data.protocols.icmp;
+            document.getElementById('syn').innerText = data.protocols.syn_count;
+
+            // Top Source IPs
+            const srcTable = document.getElementById('src_ips');
+            srcTable.innerHTML = '<tr><th>IP: Count (Threat Info)</th></tr>';
+            data.top_src_ips.forEach(item => {
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.innerText = `${item[0]}: ${item[1]}`;
+                if (item[2]) td.innerHTML += ` <span class="threat">(${item[2]})</span>`;
+                tr.appendChild(td);
+                srcTable.appendChild(tr);
+            });
+
+            // Top Destination IPs
+            const dstTable = document.getElementById('dst_ips');
+            dstTable.innerHTML = '<tr><th>IP: Count (Threat Info)</th></tr>';
+            data.top_dst_ips.forEach(item => {
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.innerText = `${item[0]}: ${item[1]}`;
+                if (item[2]) td.innerHTML += ` <span class="threat">(${item[2]})</span>`;
+                tr.appendChild(td);
+                dstTable.appendChild(tr);
+            });
+
+            // Traffic Alerts
+            const trafficUl = document.getElementById('traffic_alerts');
+            trafficUl.innerHTML = '';
+            if (data.traffic_alerts.length > 0) {
+                data.traffic_alerts.forEach(alert => {
+                    const li = document.createElement('li');
+                    li.innerText = alert;
+                    trafficUl.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.innerText = 'No recent traffic alerts';
+                trafficUl.appendChild(li);
+            }
+
+            // Threat Alerts
+            const threatUl = document.getElementById('threat_alerts');
+            threatUl.innerHTML = '';
+            if (data.threat_alerts.length > 0) {
+                data.threat_alerts.forEach(alert => {
+                    const li = document.createElement('li');
+                    li.innerText = alert;
+                    threatUl.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.innerText = 'No suspicious IPs detected';
+                threatUl.appendChild(li);
+            }
+        });
+    </script>
+</body>
+</html>

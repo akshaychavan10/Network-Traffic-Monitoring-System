@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traffic History</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #2a2a3d);
+            color: #e0e0e0;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #00d4ff;
+            font-size: 2.8em;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px rgba(0, 212, 255, 0.7);
+        }
+        .search-bar {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .search-bar input {
+            padding: 10px;
+            width: 300px;
+            border: none;
+            border-radius: 8px;
+            background: #3b3b5b;
+            color: #e0e0e0;
+            font-size: 1em;
+        }
+        .search-bar input::placeholder {
+            color: #888;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .full-width-card {
+            background: #2d2d44;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            margin-bottom: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .full-width-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+        .dual-card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        .card {
+            background: #2d2d44;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+        .full-width-card h2, .card h2 {
+            color: #ffcc00;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ffcc00;
+            padding-bottom: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #3b3b5b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        th {
+            background: #3b3b5b;
+            color: #00d4ff;
+            border-radius: 8px 8px 0 0;
+        }
+        /* Packet Counts Table */
+        #packetTable th:nth-child(1), #packetTable td:nth-child(1) { width: 30%; } /* Timestamp */
+        #packetTable th:nth-child(2), #packetTable td:nth-child(2) { width: 15%; } /* Total Packets */
+        #packetTable th:nth-child(3), #packetTable td:nth-child(3) { width: 15%; } /* TCP */
+        #packetTable th:nth-child(4), #packetTable td:nth-child(4) { width: 15%; } /* UDP */
+        #packetTable th:nth-child(5), #packetTable td:nth-child(5) { width: 15%; } /* ICMP */
+        #packetTable th:nth-child(6), #packetTable td:nth-child(6) { width: 10%; } /* SYN */
+        .scrollable {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .alerts-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .alerts-section li {
+            background: rgba(255, 85, 85, 0.3);
+            color: #fff;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            transition: background 0.3s ease;
+        }
+        .alerts-section li:hover {
+            background: rgba(255, 85, 85, 0.5);
+        }
+        .threat-alerts li {
+            background: rgba(255, 165, 0, 0.3);
+        }
+        .threat-alerts li:hover {
+            background: rgba(255, 165, 0, 0.5);
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #888;
+            font-size: 0.95em;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dual-card-container {
+                grid-template-columns: 1fr; /* Stack on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Traffic History</h1>
+    <div class="search-bar">
+        <input type="text" id="search" placeholder="Search history (e.g., IP, timestamp, SYN Flood)" onkeyup="searchHistory()">
+    </div>
+    <div class="container">
+        <!-- Packet Counts Over Time (Full Width) -->
+        <div class="full-width-card">
+            <h2>Packet Counts Over Time (5s Intervals)</h2>
+            <div class="scrollable">
+                <table id="packetTable">
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Total Packets</th>
+                        <th>TCP</th>
+                        <th>UDP</th>
+                        <th>ICMP</th>
+                        <th>SYN</th>
+                    </tr>
+                    {% for row in packet_data %}
+                        <tr>
+                            <td>{{ row[0] }}</td>
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{{ row[3] }}</td>
+                            <td>{{ row[4] }}</td>
+                            <td>{{ row[5] }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        <!-- Source and Destination IPs (Side by Side) -->
+        <div class="dual-card-container">
+            <div class="card">
+                <h2>All Source IPs</h2>
+                <div class="scrollable">
+                    <table id="srcIpTable">
+                        <tr><th>IP</th></tr>
+                        {% for ip in src_ips %}
+                            <tr><td>{{ ip }}</td></tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="card">
+                <h2>All Destination IPs</h2>
+                <div class="scrollable">
+                    <table id="dstIpTable">
+                        <tr><th>IP</th></tr>
+                        {% for ip in dst_ips %}
+                            <tr><td>{{ ip }}</td></tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Traffic Alerts and Suspicious IPs (Side by Side) -->
+        <div class="dual-card-container">
+            <div class="card">
+                <h2>Traffic Alerts</h2>
+                <div class="scrollable alerts-section">
+                    {% if traffic_alerts %}
+                        <ul id="trafficAlerts">
+                            {% for alert in traffic_alerts %}
+                                <li>{{ alert[1] }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No traffic alerts recorded</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card">
+                <h2>Suspicious IPs</h2>
+                <div class="scrollable alerts-section threat-alerts">
+                    {% if threat_alerts %}
+                        <ul id="threatAlerts">
+                            {% for alert in threat_alerts %}
+                                <li>{{ alert[1] }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No suspicious IPs recorded</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer><a href="/">Back to Dashboard</a></footer>
+
+    <script>
+        function searchHistory() {
+            const input = document.getElementById('search').value.toLowerCase();
+            const packetTable = document.getElementById('packetTable');
+            const srcIpTable = document.getElementById('srcIpTable');
+            const dstIpTable = document.getElementById('dstIpTable');
+            const trafficAlerts = document.getElementById('trafficAlerts');
+            const threatAlerts = document.getElementById('threatAlerts');
+
+            // Filter Packet Counts
+            const packetRows = packetTable.getElementsByTagName('tr');
+            for (let i = 1; i < packetRows.length; i++) {
+                const rowText = packetRows[i].innerText.toLowerCase();
+                packetRows[i].style.display = rowText.includes(input) ? '' : 'none';
+            }
+
+            // Filter Source IPs
+            const srcRows = srcIpTable.getElementsByTagName('tr');
+            for (let i = 1; i < srcRows.length; i++) {
+                const ip = srcRows[i].innerText.toLowerCase();
+                srcRows[i].style.display = ip.includes(input) ? '' : 'none';
+            }
+
+            // Filter Destination IPs
+            const dstRows = dstIpTable.getElementsByTagName('tr');
+            for (let i = 1; i < dstRows.length; i++) {
+                const ip = dstRows[i].innerText.toLowerCase();
+                dstRows[i].style.display = ip.includes(input) ? '' : 'none';
+            }
+
+            // Filter Traffic Alerts
+            if (trafficAlerts) {
+                const trafficItems = trafficAlerts.getElementsByTagName('li');
+                for (let i = 0; i < trafficItems.length; i++) {
+                    const alert = trafficItems[i].innerText.toLowerCase();
+                    trafficItems[i].style.display = alert.includes(input) ? '' : 'none';
+                }
+            }
+
+            // Filter Threat Alerts
+            if (threatAlerts) {
+                const threatItems = threatAlerts.getElementsByTagName('li');
+                for (let i = 0; i < threatItems.length; i++) {
+                    const alert = threatItems[i].innerText.toLowerCase();
+                    threatItems[i].style.display = alert.includes(input) ? '' : 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
